@@ -1,0 +1,4 @@
+学习进度：
+  1.学习android样例：NotePad。
+    a.简略查看了ContentProvider。看过了NoteList Activity的onCreate()方法。
+      其中涉及到了Cursor，SimpleCursorAdapter和查询ContentProvider中的数据。
