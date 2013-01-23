@@ -1,0 +1,23 @@
+一. 概述
+	一个android应用程序通常包含几个activities。每个activity表示一个允许用户执行任务的界面（如查看地图或者拍照片).为了切换activity，应用程序必须使用Intent来定义应用程序要做某事的意图。当你传递给startActivity()一个Intent参数，系统将解析此Intent找到适合的组件并启动它。使用Intents允许你启动其他应用程序的activity。
+	显式的Intent对象是为了启动一个指定的组件（一个具体的Activity实例），隐式的Intent对象是为了启动任何可以处理预期活动的组件。
+二. 使用户进入另一个应用程序
+	android一个最重要的特点是应用程序能够通过它想执行的动作将用户带入到另一个应用程序。例如你的app拥有一个商店的地址，而你想在地图上显示它，你不需要在你自己的应用程序中建立一个显示地图的activity，只需要通过Intent发送一个查看地址的请求。android系统会启动一个能够显示地图位置的应用程序。
+	建立一个隐式的Intent
+	隐式Intent不声明要启动的组件的类名，但是声明将要执行的动作。这个动作指明了你想要做的事，如：查看，编辑，发送或者获取。Intent经常会将数据和动作联系在一起，例如你想查看的地址，你想发送的email信息。根据你想创建的intent，数据可能是一个URI，或者其他类型的，或者没有数据。
+	如果你的数据是一个URI，你可以使用一个简单的Intent()构造函数。
+	例如，这里是一段怎么用一个指定电话号码的uri数据来创建一个显示拨电话界面的Intent
+	Uri number = Uri.parse("tel:111111");
+	Intent callIntent = new Intent(Intent.ACTION.DIAL,number);
+	当你的app调用startActivity()来激活这个意图的时候，电话app显示一个拨打电话的界面，并填入对应的电话号码
+	下面是一些其他的Intent
+	a.查看地图
+	// Map point based on address
+	Uri location = Uri.parse("geo:0,0?q=1600+Amphitheatre+Parkway,+Mountain+View,+California");
+	// Or map point based on latitude/longitude
+	// Uri location = Uri.parse("geo:37.422219,-122.08364?z=14"); // z param is zoom level
+	Intent mapIntent = new Intent(Intent.ACTION_VIEW, location);
+	b.查看网页
+	Uri webpage = Uri.parse("http://www.android.com");
+	Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+	其他的一些intent需要额外的能提供其他数据类型的数据。可以使用putExtra()来实现。
