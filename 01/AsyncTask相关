@@ -1,0 +1,41 @@
+用于异步任务的三个泛型类型是，
+
+Params：传送给后台计算方法的参数类型（例如：传递给下载任务方法的参数类型为URL集合）
+
+Progress：后台计算任务的进度单位。（例如以整型来代表下载完成进度。）
+
+Results：对后台计算的结果的类型。
+
+不是所有的类型都由一个异步任务使用。要标记为未使用的一种类型，只需使用类型无效：
+
+下面是一个下载任务例子（来源于官方doc)：
+ private class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
+     protected Long doInBackground(URL... urls) {
+         int count = urls.length;
+         long totalSize = 0;
+         for (int i = 0; i < count; i++) {
+             totalSize += Downloader.downloadFile(urls[i]);
+             publishProgress((int) ((i / (float) count) * 100));
+             // Escape early if cancel() is called
+             if (isCancelled()) break;
+         }
+         return totalSize;
+     }
+
+     protected void onProgressUpdate(Integer... progress) {
+         setProgressPercent(progress[0]);
+     }
+
+     protected void onPostExecute(Long result) {
+         showDialog("Downloaded " + result + " bytes");
+     }
+ }
+
+new DownloadFilesTask().execute(url1, url2, url3);
+异步任务执行的四个步骤：
+1.onPreExecute() 任务执行之前在ui线程调用。这一步通常是建立任务。比如在用户界面显示一个进度条。
+2.doInBackground() onPreExecute()执行完成后，后台线程立即调用此方法。这一步主要是完成耗时的后台计算任务。参数被传递到这一步。
+此步必须返回计算结果并且传递到最后一步。在此步骤中可以调用publishProgress来发布进度。
+3.onProgressUpdate()当调用publishProgress时会在ui线程中调用此步。这个步骤是用来在用户界面显示后台任务的进度。
+4.onPostExecute当后台任务结束时ui线程调用。参数为后台计算的结果。
+
