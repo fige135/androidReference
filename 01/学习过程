@@ -2,6 +2,8 @@
   1.学习android样例：NotePad。
     a.简略查看了ContentProvider。看过了NoteList Activity的onCreate()方法。
       其中涉及到了Cursor，SimpleCursorAdapter和查询ContentProvider中的数据。
----20130124----
+##20130124
     学习APIDEMOS中的loader，一个是LoaderCursor，一个是LoaderCustom.其中涉及AsyncTask的用法。
     计划学习AsyncTask用法，查看其源码，对LoaderCustom的代码进行分析。
+##20130125
+    增加AsyncTask文档
