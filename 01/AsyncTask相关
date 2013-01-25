@@ -38,4 +38,13 @@ new DownloadFilesTask().execute(url1, url2, url3);
 此步必须返回计算结果并且传递到最后一步。在此步骤中可以调用publishProgress来发布进度。
 3.onProgressUpdate()当调用publishProgress时会在ui线程中调用此步。这个步骤是用来在用户界面显示后台任务的进度。
 4.onPostExecute当后台任务结束时ui线程调用。参数为后台计算的结果。
+使用异步任务五个必须注意的地方：
+1.AsyncTask类必须在UI线程中加载
+2.任务必须在UI线程中实例化
+3.必须在UI线程中调用execute方法
+4.不要手动调用onPreExecute doInBackground onPostExecute onProgressUpdate方法。
+5.任务只会被执行一次。（如果第二次执行会抛出异常)
+AsyncTask在以下的两种情况下不用使用同步操作就能保证回调函数是同步的
+1.在构造函数或onPreExecute方法中设置成员变量，并在doInBackground中引用。
+2.在doInBackground方法中设置成员变量，并在onProgressUpdate和onPostExecute方法中引用
 
