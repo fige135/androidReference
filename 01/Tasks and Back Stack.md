@@ -1,0 +1,7 @@
+# Tasks and Back Stack #
+	如果你的程序允许用户从多个activity启动某个特殊的activity，这个activity的一个新的实例会被堆放到栈顶（而不是把原来的实例置顶）。一个activity在程序中可能被多次实例化。如果你不想你的activity被多次实例化，你可以改变这个行为。
+	当activity停止的时候，系统默认会保存activity的状态。然而你能并且应该积极地使用回调函数来保存activity的状态，以免activity被销毁和重建时造成的数据丢失。
+	系统有时为了回收内存会销毁处于停止状态的activity，当这种情况发生时，activity状态信息会丢失，然而系统仍然知道这个activity在back stack中的位置，当这个activity位于栈顶的时候，系统必须重建它而不是恢复它。为了避免丢失用户的数据，你应该重写onSaveInstanceState()方法来积极的保存这些数据。
+## managing tasks ##
+`<activity>`属性介绍：
+	taskAffinity：描述activity和task的关系。拥有相同affinity的activities理论上属于同一个task（从用户的角度来看属于同一个应用程序).一个task的affinity由它的根activity的affinity来决定。affinity决定了2种事情：
